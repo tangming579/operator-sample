@@ -10,4 +10,14 @@ plugins:
   scorecard.sdk.operatorframework.io/v2: {}
 projectName: operator-sample
 repo: github.com/tangming579/operator-sample
+resources:
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: tangming579.io
+  group: app
+  kind: AppService
+  path: github.com/tangming579/operator-sample/api/v1beta1
+  version: v1beta1
 version: "3"
