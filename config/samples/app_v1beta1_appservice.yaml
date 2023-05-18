@@ -1,11 +1,12 @@
 apiVersion: app.tangming579.io/v1beta1
 kind: AppService
 metadata:
-  name: nginx
+  labels:
+    app.kubernetes.io/name: appservice
+    app.kubernetes.io/instance: appservice-sample
+    app.kubernetes.io/part-of: operator-sample
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: operator-sample
+  name: appservice-sample
 spec:
-  size: 2
-  image: nginx:1.7.9
-  ports:
-    - port: 80
-      targetPort: 80
-      nodePort: 30002
+  # TODO(user): Add fields here

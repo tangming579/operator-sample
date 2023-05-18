@@ -9,7 +9,7 @@ plugins:
   manifests.sdk.operatorframework.io/v2: {}
   scorecard.sdk.operatorframework.io/v2: {}
 projectName: operator-sample
-repo: github.com/tangming579/operator-sample
+repo: github.com/tangming579/operator-sample/v2
 resources:
 - api:
     crdVersion: v1
@@ -18,6 +18,6 @@ resources:
   domain: tangming579.io
   group: app
   kind: AppService
-  path: github.com/tangming579/operator-sample/api/v1beta1
+  path: github.com/tangming579/operator-sample/v2/api/v1beta1
   version: v1beta1
 version: "3"
