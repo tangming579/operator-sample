@@ -56,7 +56,7 @@ func (r *AppServiceReconciler) Reconcile(ctx context.Context, req ctrl.Request) 
 	ctx = context.Background()
 	var log = log.FromContext(ctx)
 
-	var appService appv1beta1.AppService
+	appService := appv1beta1.AppService{}
 	err := r.Get(ctx, req.NamespacedName, &appService)
 	if err != nil {
 		// MyApp 被删除的时候，忽略

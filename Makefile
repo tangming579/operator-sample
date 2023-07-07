@@ -109,7 +109,7 @@ test: manifests generate fmt vet envtest ## Run tests.
 
 .PHONY: build
 build: manifests generate fmt vet ## Build manager binary.
-	go build -o bin/manager main.go
+	GOOS=linux GOARCH=amd64 go build -o bin/manager main.go
 
 .PHONY: run
 run: manifests generate fmt vet ## Run a controller from your host.
@@ -120,7 +120,7 @@ run: manifests generate fmt vet ## Run a controller from your host.
 # More info: https://docs.docker.com/develop/develop-images/build_enhancements/
 .PHONY: docker-build
 docker-build: test ## Build docker image with the manager.
-	docker build -t ${IMG} .
+	cp bin/manager ./manager && docker build -t ${IMG} .
 
 .PHONY: docker-push
 docker-push: ## Push docker image with the manager.
@@ -258,3 +258,13 @@ catalog-build: opm ## Build a catalog image.
 .PHONY: catalog-push
 catalog-push: ## Push a catalog image.
 	$(MAKE) docker-push IMG=$(CATALOG_IMG)
+
+redeploy: build docker-build docker-push undeploy deploy
+	echo "redeploy finished"
+
+rebuild: build docker-build docker-push
+	kubectl delete pod `kubectl get pod -nsystem|grep system|awk '{print $$1}'` -nsystem
+	echo "rebuild finished"
+	echo "watch log:"
+	sleep 2
+	echo "kubectl logs --tail 100 -f `kubectl get pod -ninspection|grep inspection|awk '{print $$1}'` -c manager -nsystem"
